@@ -8,7 +8,6 @@
 # 下载地址
 (kdPythonInstaller)["https://github.com/bkdwei/kdPythonInstaller/releases/download/v1.0.0/kdPythonInstaller-1.0.0.exe"]
 
-=======
 # 使用说明
 - 首先查看系统信息，如果处理器那里显示x86_64，则安装64位python，否则安装32位python。
 - 其次需要安装pip。这个工具用来执行安装命令和卸载命令的。
