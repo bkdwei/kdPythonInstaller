@@ -1,0 +1,2 @@
+# kdPythonInstaller
+可以让windows用户快速配置Python环境和快速安装Python软件的exe程序
