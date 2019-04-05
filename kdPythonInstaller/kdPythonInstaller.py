@@ -23,7 +23,7 @@ def get_file_realpath(file):
 # 查看系统信息
 def get_sysinfo():
     messagebox.showinfo("系统信息", "系统名称:\t" + platform.system() +"\n处理器：\t" + platform.processor()  + \
-                        "\n\n系统路径：\t" + environ["PATH"] + "\n\nPYTHON安装目录：\t" + environ["PYTHONPATH"] )
+                        "\n\n系统路径：\t" + environ["PATH"])
 
 #     下载64位的安装包
 def down64_installer():
@@ -42,7 +42,7 @@ def install_pip():
 # 安装软件
 def install_package(package_name):
     if package_name :
-        run_cmd("pip install " + package_name)
+        run_cmd("pip install " + package_name )
         messagebox.showinfo("安装软件", "安装"+ package_name + "成功")
     else :
         messagebox.showerror("安装软件", "请输入软件名")
@@ -50,7 +50,7 @@ def install_package(package_name):
 # 卸载软件        
 def uninstall_package(package_name):
     if package_name :
-        run_cmd("pip uninstall " + package_name)
+        run_cmd("pip uninstall " + package_name + " -y")
         messagebox.showinfo("卸载软件", "卸载"+ package_name + "成功")
     else :
         messagebox.showerror("卸载软件", "请输入软件名")
@@ -64,15 +64,10 @@ def run_cmd(cmd):
     else :
         messagebox.showerror("执行命令", "暂不支持的系统")
         
-    
-
-    
-print(environ)
-
-if __name__ == '__main__':
+def main():
     root = Tk()
     Button(root, text='0.查看系统信息',command=get_sysinfo).grid(row=0, column=0, sticky=W,ipadx=11)
-    system_label2 = ttk.Label(root, text="系统类型：" + platform.system()).grid(row=0, column=1)
+    ttk.Label(root, text="系统类型：" + platform.system()).grid(row=0, column=1)
     Button(root, text='1.安装64位python',command=down64_installer).grid(row=1, column=0, sticky=W)
     Button(root, text='1.安装32位python',command=down32_installer).grid(row=2, column=0, sticky=W)
     Button(root, text='2.安装pip',command=install_pip).grid(row=3, column=0, sticky=W,ipadx=27)
@@ -81,3 +76,5 @@ if __name__ == '__main__':
     Button(root, text='3.安装软件',command=lambda :install_package(package_entry.get())).grid(row=2, column=1, sticky=E,ipadx=78)
     Button(root, text='4.卸载软件',command=lambda :uninstall_package(package_entry.get())).grid(row=3, column=1, sticky=E,ipadx=78)
     root.mainloop()
+if __name__ == '__main__':
+    main()

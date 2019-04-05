@@ -22,7 +22,7 @@ setup(
     license="GPLv3+",
     platforms=["any"],
 #     需要安装的依赖
-    install_requires=["PyQt5"],
+    install_requires=[],
     packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
@@ -47,7 +47,7 @@ setup(
      # 注意：模块与函数之间是冒号:
     entry_points={
         'gui_scripts': [
-            'kdPythonInstaller=kdPythonInstaller.kdPythonInstaller:main'
+            'kdPythonInstaller=kdPythonInstaller.kdPythonInstaller:main',
             'kdpythoninstaller=kdPythonInstaller.kdPythonInstaller:main'
         ],    
     },
