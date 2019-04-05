@@ -3,62 +3,76 @@ Created on 2019年4月5日
 
 @author: bkd
 '''
-import platform
-from os import environ
+from os import environ,name,system
 from os.path import join,dirname,realpath
-from tkinter import Tk,Button,ttk
-from tkinter import messagebox as msg
+import platform
+from webbrowser import open_new_tab
+from tkinter import Tk,Button,ttk,messagebox
 from tkinter.constants import W,E
 try:
     from os import startfile
 except Exception as e:
+#     messagebox.showerror("导入os.startfile", "导入python模块失败")
     pass
 
 cur_dir = dirname(realpath(__file__))
+# 获取文件的位置
+def get_file_realpath(file):
+    return join(cur_dir,file)
+
+# 查看系统信息
+def get_sysinfo():
+    messagebox.showinfo("系统信息", "系统名称:\t" + platform.system() +"\n处理器：\t" + platform.processor()  + \
+                        "\n\n系统路径：\t" + environ["PATH"] + "\n\nPYTHON安装目录：\t" + environ["PYTHONPATH"] )
+
 #     下载64位的安装包
 def down64_installer():
-    startfile("https://www.python.org/ftp/python/3.7.3/python-3.7.3-amd64.exe")
+    open_new_tab("https://www.python.org/ftp/python/3.7.3/python-3.7.3-amd64.exe")
 
 #     下载32位的安装包
 def down32_installer():
-    startfile("https://www.python.org/ftp/python/3.7.3/python-3.7.3.exe")
+    open_new_tab("https://www.python.org/ftp/python/3.7.3/python-3.7.3.exe")
 
 #     安装pip
 def install_pip():
     script_path = get_file_realpath("get-pip.py") 
-    startfile("python " + script_path)
-    msg.showerror("安装pip", "安装pip成功")
-def get_file_realpath(file):
-    return join(cur_dir,file)
+    run_cmd("python " + script_path)
+    messagebox.showinfo("安装pip", "安装pip成功")
 
 # 安装软件
 def install_package(package_name):
     if package_name :
-        startfile("pip install " + package_name)
+        run_cmd("pip install " + package_name)
+        messagebox.showinfo("安装软件", "安装"+ package_name + "成功")
     else :
-        msg.showerror("安装软件", "请输入软件名")
+        messagebox.showerror("安装软件", "请输入软件名")
         
 # 卸载软件        
 def uninstall_package(package_name):
     if package_name :
-        startfile("pip uninstall " + package_name)
+        run_cmd("pip uninstall " + package_name)
+        messagebox.showinfo("卸载软件", "卸载"+ package_name + "成功")
     else :
-        msg.showerror("卸载软件", "请输入软件名")
+        messagebox.showerror("卸载软件", "请输入软件名")
+        
+# 运行命令
+def run_cmd(cmd):
+    if name == "nt":
+        startfile(cmd)
+    elif name == "posix":
+        system(cmd)
+    else :
+        messagebox.showerror("执行命令", "暂不支持的系统")
+        
     
-def get_sysinfo():
-    sysinfo = {}
-    sysinfo["PYTHONPATH"] = environ["PYTHONPATH"]
-    sysinfo["HOME"] = environ["HOME"]
-    sysinfo["USER"] = environ["USER"]
-    sysinfo["PATH"] = environ["PATH"]
-    return sysinfo
+
     
 print(environ)
 
 if __name__ == '__main__':
     root = Tk()
-    system_label1 = ttk.Label(root, text="系统类型：").grid(row=0, column=0)
-    system_label2 = ttk.Label(root, text=platform.system()).grid(row=0, column=1)
+    Button(root, text='0.查看系统信息',command=get_sysinfo).grid(row=0, column=0, sticky=W,ipadx=11)
+    system_label2 = ttk.Label(root, text="系统类型：" + platform.system()).grid(row=0, column=1)
     Button(root, text='1.安装64位python',command=down64_installer).grid(row=1, column=0, sticky=W)
     Button(root, text='1.安装32位python',command=down32_installer).grid(row=2, column=0, sticky=W)
     Button(root, text='2.安装pip',command=install_pip).grid(row=3, column=0, sticky=W,ipadx=27)

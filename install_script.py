@@ -2,7 +2,7 @@ import sys
 import os
 from setuptools.command.install import install
 
-project_name = "kdPythonAPIViewer"
+project_name = "kdPythonInstaller"
 class install_cmd(install):
     def run(self):
         install.run(self)
